@@ -1,39 +1,55 @@
-# Slackbot
-Simple SSL Slackbot
+# __Slackbot__ - *theo5970*
+간단한 SSL통신 Slack(슬렉) IRC 봇입니다.
 
 * * *
 ## 1. 소개
-philly님의 코드를 참고하여 만든 간단한 Slack IRC 봇입니다.<br/>
+[phillyai](http://github.com/phillyai)님의 코드를 참고하여 만든 간단한 Slack IRC 봇입니다.<br/>
+개발 언어는 100% C#이고, Visual Studio 2015 Community에서 제작되었습니다.<br/>
 다양한 명령어들이 있습니다<br/>
+* * **
 ## 2. 명령어
-### 접두사는 !입니다
-reverse: 문자열을 뒤집습니다. ex) Hello! -> !olleH<br/>
-99: 구구단 출력<br/>
-helloworld: 헬로월드 출력<br/>
-time: 현재 날짜와 시간<br/>
-beep: 빼애액합니다<br/>
-commands [page]: 명령어 도움말<br/>
-dec2bin [n]: 10진수 -> 2진수<br/>
-bin2dec [n]: 2진수 -> 10진수<br/>
-fact [n]: 팩토리얼 !n<br/>
-fibo [n]: 피보나치 수열의 n항<br/>
-sum_n [n]: 1부터 n까지 더한 값 <br/>
-pi: 원주율 500자리 <br/>
-hang: 유니코드 랜덤 한글문자 500자 출력 <br/>
-b64enc: 문자열 -> Base64 인코딩 <br/>
-b64dec: 문자열 -> Base64 디코딩 <br/>
-ban: (관리자) 차단하기 <br/>
-unban: (관리자) 차단풀기 <br/>
-notice: 공지사항 띄우기 <br/>
-save: 저장하기 <br/>
-say: 저장한 걸 출력하기 <br/>
-fuck: ㅁㄴㅇㄹ <br/>
-stopwatch [start/stop/pause]: 스톱워치 기능 (시작 / 일시중지 / 중지) <br/>
-bf [code]: 브레인퍽 인터프리터 <br/>
-abc [code]: ABCD 인터프리터 (자작) <br/>
-cs [code]: C# 인터프리터 <br/>
-py [code]: 파이썬 인터프리터 <br/>
-op [user]: (관리자) 관리자 주기 <br/>
-deop [user]: (관리자) 관리자 권한 해제 <br/>
-
+>### 중요: 접두사는 !입니다
+1. reverse: 문자열을 뒤집습니다. ex) Hello! -> !olleH<br/>
+2. 99: 구구단 출력<br/>
+3. helloworld: 헬로월드 출력<br/>
+4. time: 현재 날짜와 시간<br/>
+5. beep: 빼애액합니다<br/>
+6. commands [page]: 명령어 도움말<br/>
+7. dec2bin [n]: 10진수 -> 2진수<br/>
+8. bin2dec [n]: 2진수 -> 10진수<br/>
+9. fact [n]: 팩토리얼 !n<br/>
+10. fibo [n]: 피보나치 수열의 n항<br/>
+11. sum_n [n]: 1부터 n까지 더한 값 <br/>
+12. pi: 원주율 500자리 <br/>
+13. hang: 유니코드 랜덤 한글문자 500자 출력 <br/>
+14. b64enc: 문자열 -> Base64 인코딩 <br/>
+15. b64dec: 문자열 -> Base64 디코딩 <br/>
+16. ban: (관리자) 차단하기 <br/>
+17. unban: (관리자) 차단풀기 <br/>
+18. notice: 공지사항 띄우기 <br/>
+19. save: 저장하기 <br/>
+20. say: 저장한 걸 출력하기 <br/>
+21. ~~fuck: ㅁㄴㅇㄹ~~ <br/>
+22. stopwatch [start/stop/pause]: 스톱워치 기능 (시작 / 일시중지 / 중지) <br/>
+23. bf [code]: 브레인퍽 인터프리터 <br/>
+24. abc [code]: ABCD 인터프리터 (자작) <br/>
+25. cs [code]: C# 인터프리터 <br/>
+26. py [code]: 파이썬 인터프리터 <br/>
+27. op [user]: (관리자) 관리자 주기 <br/>
+28. deop [user]: (관리자) 관리자 권한 해제 <br/>
+* * *
+## 3. 소스 파일
+Program.cs - 봇을 생성하고 실행시킵니다. <br/>
+ABCDRunner.cs - ABCD 언어(자작)를 실행시킵니다. <br/>
+Bot.cs - 봇에 관한 모든 코드들이 포함되어 있습니다. <br/>
+Brainfuck.cs - 브레인퍽에 대한 인터프리터입니다. <br/>
+CSharpRunner.cs - csi를 이용한 C# 인터프리터입니다. <br/>
+FileMonitor.cs - 파일을 모니터링하여 잠재적인 위험으로부터 보호합니다. <br/>
+PythonRunner.cs - IronPython을 이용한 파이썬 인터프리터입니다. <br/>
+AdminManager.cs - 관리자 목록을 관리합니다. <br/>
+* * *
+## 4. 종료하는 법
+콘솔창에서 !quit 하면 즉시 종료됩니다.
+* * *
+## 5. 마치며
 감사합니다.
