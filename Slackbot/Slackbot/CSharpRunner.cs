@@ -40,7 +40,9 @@ namespace Slackbot
             startInfo.RedirectStandardOutput = true;
         }
         public static void Start()
-        { 
+        {
+            Load();
+            Init();
             prc = new Process();
             prc.EnableRaisingEvents = false;
             prc.StartInfo = startInfo;
