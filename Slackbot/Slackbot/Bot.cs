@@ -194,9 +194,6 @@ namespace Slackbot
                 if (readline.StartsWith("PING"))    // PING 요청이 오면 PONG이라고 바꿔서 응답하기
                 {
                     send_string(readline.Replace("PING", "PONG"));
-                    Console.ForegroundColor = ConsoleColor.DarkGreen;
-                    Console.WriteLine("Ping Pong");
-                    Console.ForegroundColor = ConsoleColor.Gray;
                 }
                 if (readline[0] == ':' && readline.Split(' ')[1] == "PRIVMSG")  // 채팅 이벤트
                 {
