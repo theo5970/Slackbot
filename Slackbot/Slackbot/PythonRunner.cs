@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+ * 작성자: theo5970
+ * 만든 날짜: 2016-09-17
+ * 문의: blog.naver.com/theo5970 또는 theo5970@naver.com
+ * 라이선스: MIT Lincese
+ * -
+ * 봇 코드 참고: phillyai > SlackBot
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,12 +22,6 @@ namespace Slackbot
         #region Fields
         public delegate void StreamEventHandler(string line);
         public event StreamEventHandler StreamOutput;
-        #endregion
-        #region Constructors
-        public ScriptOutputStream()
-        {
-
-        }
         #endregion
         #region Properties
         public override bool CanRead
@@ -37,15 +39,18 @@ namespace Slackbot
             get { return true; }
         }
 
-        public override long Length
-        {
-            get { throw new NotImplementedException(); }
-        }
 
         public override long Position
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get; set;
+        }
+
+        public override long Length
+        {
+            get
+            {
+                return 0;
+            }
         }
         #endregion
         #region Exposed Members
@@ -55,18 +60,11 @@ namespace Slackbot
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            throw new NotImplementedException();
+            return 0;
         }
 
-        public override long Seek(long offset, SeekOrigin origin)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void SetLength(long value)
-        {
-            throw new NotImplementedException();
-        }
+        public override long Seek(long offset, SeekOrigin origin) { return 0; }
+        public override void SetLength(long value) { }
         public StringBuilder sb = new StringBuilder();
         public override void Write(byte[] buffer, int offset, int count)
         {
@@ -97,9 +95,12 @@ namespace Slackbot
         public static void Init()
         {
             if (codes == null) codes = new Dictionary<string, StringBuilder>();
+
             engine = Python.CreateEngine();
             scope = engine.CreateScope();
+
             ScriptOutputStream stream = new ScriptOutputStream();
+
             stream.StreamOutput += Stream_StreamOutput;
             engine.Runtime.IO.SetOutput(stream, Encoding.Unicode);
             codes.Clear();

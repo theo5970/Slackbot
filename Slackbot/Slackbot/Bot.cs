@@ -1,6 +1,6 @@
 ﻿/*
  * 작성자: theo5970
- * 만든 날짜: 2016-09-16
+ * 만든 날짜: 2016-09-17
  * 문의: blog.naver.com/theo5970 또는 theo5970@naver.com
  * 라이선스: MIT Lincese
  * -
@@ -9,18 +9,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net;
 using System.Net.Security;
 using System.Net.Sockets;
-using System.IO;
-using System.Threading;
-using System.Security.Cryptography.X509Certificates;
 using System.Numerics;
-
-using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Slackbot
 {
@@ -28,13 +26,17 @@ namespace Slackbot
     {
         public static List<string> helps;
         public static int page_count;
+
         public delegate void HelpHandler(string ch, string msg);
+
         public static event HelpHandler HelpShowed;
+
         public static void Load()
         {
             helps = new List<string>(File.ReadAllLines("help.txt"));
             page_count = helps.Count / 5 + 1;
         }
+
         public static void showPage(string channel, int index)
         {
             if (index <= page_count)
@@ -61,25 +63,30 @@ namespace Slackbot
             }
         }
     }
-    public class Bot
+
+    public class Bot : IDisposable
     {
         // 포트
-        int port;
+        private int port;
+
         // 호스트, 닉네임, 채널 이름, 비밀번호
-        string host, nickname, channel, password;
+        private string host, nickname, channel, password;
+
         // 저장된 거 (!save 했을 때)
         private string saved = "";
+
         private NetworkStream stream;                       //네트워크 스트림
         private TcpClient client;                           //TCP 클라이언트
         private StreamReader reader;                        //읽기 스트림
         private StreamWriter writer;                        //쓰기 스트림
-        private Thread updateThread;                        //업데이트 스레드 
+        private Thread updateThread;                        //업데이트 스레드
         private Thread timeThread;                          //시간 알려주는 스레드
         private SslStream _ssl;                             //SSL 보안 스트림
         private Brainfuck brainfuck;                        //브레인퍽 인터프리터
         private Stopwatch stopwatch = new Stopwatch();      //스톱워치
         private static Random random = new Random();        //랜덤
         public List<string> banlist = new List<string>();   //벤 리스트
+
         public Bot(int port, string host, string nickname, string channel, string password)
         {
             this.port = port;
@@ -88,6 +95,7 @@ namespace Slackbot
             this.channel = channel;
             this.password = password;
         }
+
         /// <summary>
         /// IRC에 연결합니다.
         /// </summary>
@@ -100,7 +108,7 @@ namespace Slackbot
 
             reader = new StreamReader(_ssl);
             writer = new StreamWriter(_ssl);
-            
+
             // 정보를 서버에 보내기
             send_string(string.Format("PASS {0}", password));
             send_string(string.Format("NICK {0}", nickname));
@@ -135,7 +143,8 @@ namespace Slackbot
                 {
                     // IRC에 보낸다.
                     SendMessage(readline);
-                } else
+                }
+                else
                 {
                     // 종료하기
                     quit = true;
@@ -149,7 +158,6 @@ namespace Slackbot
                 }
             }
         }
-
 
         // 시간 스레드
         private void time_target()
@@ -168,7 +176,10 @@ namespace Slackbot
             }
         }
 
-        private static bool ValidateCert(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; }
+        private static bool ValidateCert(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+        {
+            return true;
+        }
 
         // 업데이트 스레드
         private void update_target()
@@ -204,7 +215,7 @@ namespace Slackbot
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine(message);
                     Console.ForegroundColor = ConsoleColor.Gray;
-                    
+
                     // 벤 리스트에 포함 안된다면 받아주고 아니면 무시하기
                     if (!banlist.Contains(nickname))
                     {
@@ -223,7 +234,8 @@ namespace Slackbot
                         {
                             SendMessage(channel, "어디서 제 이름을 함부로 부르시는지요?");
                         }
-                    } else
+                    }
+                    else
                     {
                         // 쿨하게 무시한다고 보내준다~
                         SendMessage(channel, "-- 무시 --");
@@ -244,11 +256,13 @@ namespace Slackbot
                 readline = reader.ReadLine();
             }
         }
+
         public async void HelloMessage()
         {
             await Task.Delay(10);   // 10 밀리초 대기
             SendMessage(channel, "theo5970_bot이 켜졌습니다! 안녕하세요?");
         }
+
         /// <summary>
         /// 설정된 채널에 메시지를 보냅니다.
         /// </summary>
@@ -264,6 +278,7 @@ namespace Slackbot
                 SendMessage("문자열이 너무 깁니다.");
             }
         }
+
         /// <summary>
         /// 지정된 채널에 메시지를 보냅니다.
         /// </summary>
@@ -274,11 +289,13 @@ namespace Slackbot
             if (message.Length < 480)
             {
                 send_string(string.Format("PRIVMSG {0} : {1}", _channel, message));
-            } else
+            }
+            else
             {
                 SendMessage(_channel, "문자열이 너무 깁니다.");
             }
         }
+
         /// <summary>
         /// 내부적으로 스트림에 데이터를 씁니다.
         /// </summary>
@@ -288,6 +305,7 @@ namespace Slackbot
             writer.WriteLine(data);
             writer.Flush();
         }
+
         /// <summary>
         /// 문자열을 지정된 크기만큼 나눕니다.
         /// </summary>
@@ -299,9 +317,11 @@ namespace Slackbot
             return Enumerable.Range(0, str.Length / chunkSize)
                 .Select(i => str.Substring(i * chunkSize, chunkSize));
         }
+
         private static string bf_ch = "";   //브레인퍽 임시채널
         private static string cs_ch = "";   //C# 임시채널
         private static string py_ch = "";   //파이썬 임시채널
+
         /// <summary>
         /// 명령어를 처리합니다.
         /// </summary>
@@ -353,7 +373,8 @@ namespace Slackbot
                         if (int.TryParse(args.Trim(), out n))
                         {
                             ShowHelp.showPage(channel, Convert.ToInt32(args.Trim()));
-                        } else
+                        }
+                        else
                         {
                             ShowHelp.showPage(channel, 1);
                         }
@@ -600,6 +621,7 @@ namespace Slackbot
                                 SendMessage(channel, "이미 실행중입니다.");
                             }
                             break;
+
                         case "pause":
                             if (stopwatch.IsRunning)
                             {
@@ -612,12 +634,14 @@ namespace Slackbot
                                 SendMessage(channel, "스톱워치가 시작되지 않았습니다.");
                             }
                             break;
+
                         case "stop":
                             stopwatch.Stop();
                             SendMessage(channel, string.Format("시간: {0:F3}초", stopwatch.ElapsedMilliseconds / 1000.0));
                             stopwatch.Reset();
                             SendMessage(channel, "스톱워치가 중지 되었습니다.");
                             break;
+
                         default:
                             SendMessage(channel, "stopwatch [start/pause/stop]");
                             SendMessage(channel, "start - 스톱워치를 시작합니다.");
@@ -655,11 +679,13 @@ namespace Slackbot
                         {
                             cs_ch = channel;
                             CSharpRunner.Input(args.Trim());
-                        } else
+                        }
+                        else
                         {
                             SendMessage(channel, "보안을 위해 해당 코드는 무시됩니다.");
                         }
-                    } else
+                    }
+                    else
                     {
                         SendMessage(channel, "권한이 없습니다.");
                     }
@@ -672,7 +698,8 @@ namespace Slackbot
                         if (!AdminManager.Add(_nickname))
                         {
                             SendMessage(channel, "목록에 이미 존재합니다.");
-                        } else
+                        }
+                        else
                         {
                             SendMessage(channel, "관리자 목록에 추가하였습니다.");
                         }
@@ -692,11 +719,13 @@ namespace Slackbot
                             if (!AdminManager.Remove(_nickname))
                             {
                                 SendMessage(channel, "목록에 존재하지 않습니다.");
-                            } else
+                            }
+                            else
                             {
                                 SendMessage(channel, "목록에서 삭제했습니다.");
                             }
-                        } else
+                        }
+                        else
                         {
                             SendMessage(channel, "자기 자신을 삭제할 수 없습니다.");
                         }
@@ -715,12 +744,15 @@ namespace Slackbot
                         case "run":
                             PythonRunner.Run(nickname);
                             break;
+
                         case "reset":
                             PythonRunner.Reset();
                             break;
+
                         case "clear":
                             PythonRunner.Clear(nickname);
                             break;
+
                         default:
                             PythonRunner.Add(nickname, args);
                             break;
@@ -735,12 +767,13 @@ namespace Slackbot
             }
             await Task.Delay(1);
         }
+
         // 브레인퍽 출력
         private void Brainfuck_ShutdownRequested(string message)
         {
             SendMessage(bf_ch, message);
         }
-        
+
         // C# 인터프리터 출력
         private void CSharpRunner_OutputData(string output)
         {
@@ -757,6 +790,11 @@ namespace Slackbot
         private void ShowHelp_HelpShowed(string ch, string msg)
         {
             SendMessage(ch, msg);
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }
