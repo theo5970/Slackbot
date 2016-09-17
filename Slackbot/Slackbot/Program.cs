@@ -1,11 +1,12 @@
 ﻿/*
  * 작성자: theo5970
- * 만든 날짜: 2016-09-17
+ * 만든 날짜: 2016-09-18
  * 문의: blog.naver.com/theo5970 또는 theo5970@naver.com
  * 라이선스: MIT Lincese
  * -
  * 봇 코드 참고: phillyai > SlackBot
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
