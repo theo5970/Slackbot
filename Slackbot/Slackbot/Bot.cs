@@ -168,7 +168,11 @@ namespace Slackbot
                 dt = DateTime.Now;
                 if (dt.Minute == 0 && dt.Second == 0)
                 {
-                    string message = string.Format("현재 {0}시가 되었음을 알려드립니다.", dt.Hour);
+                    string message = string.Format("현재 {0}시가 되었음을 알려드립니다. ", dt.Hour);
+                    if (dt.Hour >= 0 && dt.Hour <= 5)
+                    {
+                        message += "안 주무실건가요?";
+                    }
                     SendMessage("general", message);
                     SendMessage(message);
                 }
@@ -231,11 +235,6 @@ namespace Slackbot
                         {
                             SendMessage(channel, "어디서 제 이름을 함부로 부르시는지요?");
                         }
-                    }
-                    else
-                    {
-                        // 쿨하게 무시한다고 보내준다~
-                        SendMessage(channel, "-- 무시 --");
                     }
                 }
                 // 채널 요청에 응답하기
