@@ -6,9 +6,10 @@
 [phillyai](http://github.com/phillyai)님의 코드를 참고하여 만든 간단한 Slack IRC 봇입니다.<br/>
 개발 언어는 100% C#이고, Visual Studio 2015 Community에서 제작되었습니다.<br/>
 다양한 명령어들이 있습니다<br/>
-* * **
+* * *
 ## 2. 명령어
->### 중요: 접두사는 !입니다
+> ####중요: 접두사는 __!__ 입니다
+
 1. reverse: 문자열을 뒤집습니다. ex) Hello! -> !olleH<br/>
 2. 99: 구구단 출력<br/>
 3. helloworld: 헬로월드 출력<br/>
@@ -37,6 +38,7 @@
 26. py [code]: 파이썬 인터프리터 <br/>
 27. op [user]: (관리자) 관리자 주기 <br/>
 28. deop [user]: (관리자) 관리자 권한 해제 <br/>
+
 * * *
 ## 3. 소스 파일
 Program.cs - 봇을 생성하고 실행시킵니다. <br/>
@@ -47,9 +49,11 @@ CSharpRunner.cs - csi를 이용한 C# 인터프리터입니다. <br/>
 FileMonitor.cs - 파일을 모니터링하여 잠재적인 위험으로부터 보호합니다. <br/>
 PythonRunner.cs - IronPython을 이용한 파이썬 인터프리터입니다. <br/>
 AdminManager.cs - 관리자 목록을 관리합니다. <br/>
+
 * * *
 ## 4. 종료하는 법
 콘솔창에서 !quit 하면 즉시 종료됩니다.
 * * *
+
 ## 5. 마치며
 감사합니다.
