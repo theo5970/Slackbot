@@ -31,13 +31,21 @@ namespace Slackbot
 
         public static event HelpHandler HelpShowed;
 
+        /// <summary>
+        /// 도움말 페이지 파일을 불러옵니다.
+        /// </summary>
         public static void Load()
         {
             helps = new List<string>(File.ReadAllLines("help.txt"));
             page_count = helps.Count / 5 + 1;
         }
 
-        public static void showPage(string channel, int index)
+        /// <summary>
+        /// 도움말을 페이지마다 나눠서 보여줍니다.
+        /// </summary>
+        /// <param name="channel">메시지를 받을 채널</param>
+        /// <param name="index">쪽수</param>
+        public static void Show(string channel, int index)
         {
             if (index <= page_count)
             {
@@ -368,11 +376,11 @@ namespace Slackbot
                         int n = 0;
                         if (int.TryParse(args.Trim(), out n))
                         {
-                            ShowHelp.showPage(channel, Convert.ToInt32(args.Trim()));
+                            ShowHelp.Show(channel, Convert.ToInt32(args.Trim()));
                         }
                         else
                         {
-                            ShowHelp.showPage(channel, 1);
+                            ShowHelp.Show(channel, 1);
                         }
                     }
                     break;
