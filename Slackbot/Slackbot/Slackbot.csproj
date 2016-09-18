@@ -103,6 +103,7 @@
     <Compile Include="AdminManager.cs" />
     <Compile Include="Bot.cs" />
     <Compile Include="Brainfuck.cs" />
+    <Compile Include="Command.cs" />
     <Compile Include="CSharpRunner.cs" />
     <Compile Include="FileMonitor.cs" />
     <Compile Include="Program.cs" />

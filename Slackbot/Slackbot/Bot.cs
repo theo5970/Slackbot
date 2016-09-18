@@ -74,6 +74,7 @@ namespace Slackbot
 
     public class Bot : IDisposable
     {
+        #region 속성
         // 포트
         private int port;
 
@@ -94,6 +95,7 @@ namespace Slackbot
         private Stopwatch stopwatch = new Stopwatch();      //스톱워치
         private static Random random = new Random();        //랜덤
         public List<string> banlist = new List<string>();   //벤 리스트
+        #endregion
 
         public Bot(int port, string host, string nickname, string channel, string password)
         {
