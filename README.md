@@ -3,7 +3,7 @@
 
 * * *
 ## 1. 소개
-[phillyai](http://github.com/phillyai)님의 코드를 참고하여 만든 간단한 Slack IRC 봇입니다.<br/>
+[phillyai](http://github.com/phillyai)님의 코드를 기반으로 만든 간단한 Slack IRC 봇입니다.<br/>
 개발 언어는 100% C#이고, Visual Studio 2015 Community에서 제작되었습니다.<br/>
 다양한 명령어들이 있습니다<br/>
 * * *
